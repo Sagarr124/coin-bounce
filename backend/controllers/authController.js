@@ -143,7 +143,7 @@ const authController = {
 
         try {
             await RefreshToken.updateOne(
-                { userId: user._id },
+                { _id: user._id },
                 { token: refreshToken },
                 { upsert: true }
             );

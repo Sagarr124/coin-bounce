@@ -33,6 +33,7 @@ const auth = async (req, res, next) => {
         const userDto = new UserDTO(user);
 
         req.user = userDto;
+
         next();
     } catch (error) {
         return next(error);

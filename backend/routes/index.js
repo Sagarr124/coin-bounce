@@ -28,7 +28,7 @@ router.get("/blogs", auth, blogController.getBlogs);
 router.get("/blog/:id", auth, blogController.getBlogById);
 
 // UPDATE BLOG
-router.put("/blog/", auth, blogController.updateBlog);
+router.put("/blog", auth, blogController.updateBlog);
 
 // DELETE BLOG
 router.delete("/blog/:id", auth, blogController.deleteBlog);
