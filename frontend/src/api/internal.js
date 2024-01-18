@@ -127,3 +127,31 @@ export const updateBlog = async (data) => {
 
     return response;
 };
+
+api.interceptors.response.use(
+    (config) => config,
+    async (error) => {
+        const originalRequest = error.config;
+
+        if (
+            (error.response.status === 401 || error.response.status === 500) &&
+            originalRequest &&
+            !originalRequest._retry
+        ) {
+            originalRequest._retry = true;
+
+            try {
+                const response = await api.get(
+                    `${process.env.REACT_APP_INTERNAL_API_PATH}/refresh`,
+                    { withCredentials: true }
+                );
+
+                if (response.status === 200) {
+                    return api.request(originalRequest);
+                }
+            } catch (error) {
+                return error;
+            }
+        }
+    }
+);

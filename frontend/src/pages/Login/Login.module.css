@@ -41,6 +41,7 @@
     color: #16c784;
     font-size: 18px;
     cursor: pointer;
+    border: none;
 }
 
 .errorMessage {

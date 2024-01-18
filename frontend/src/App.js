@@ -14,12 +14,19 @@ import SubmitBlog from "./pages/SubmitBlog/SubmitBlog";
 import BlogDetails from "./pages/BlogDetails/BlogDetails";
 import UpdateBlog from "./pages/UpdateBlog/UpdateBlog";
 
+import useAutoLogin from "./hooks/useAutoLogin";
+import Loader from "./components/Loader/Loader";
+
 import styles from "./App.module.css";
 
 function App() {
     const isAuth = useSelector((state) => state.user.auth);
 
-    return (
+    const loading = useAutoLogin();
+
+    return loading ? (
+        <Loader text="..." />
+    ) : (
         <div className={styles.container}>
             <BrowserRouter>
                 <div className={styles.layout}>
