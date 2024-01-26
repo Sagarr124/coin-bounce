@@ -131,27 +131,34 @@ export const updateBlog = async (data) => {
 api.interceptors.response.use(
     (config) => config,
     async (error) => {
-        const originalRequest = error.config;
+        const originalReq = error.config;
+
+        const errorMessage =
+            error.response &&
+            error.response.data &&
+            error.response.data.message;
 
         if (
+            errorMessage === "Unauthorized" &&
             (error.response.status === 401 || error.response.status === 500) &&
-            originalRequest &&
-            !originalRequest._retry
+            originalReq &&
+            !originalReq._isRetry
         ) {
-            originalRequest._retry = true;
+            originalReq._isRetry = true;
 
             try {
-                const response = await api.get(
+                await axios.get(
                     `${process.env.REACT_APP_INTERNAL_API_PATH}/refresh`,
-                    { withCredentials: true }
+                    {
+                        withCredentials: true,
+                    }
                 );
 
-                if (response.status === 200) {
-                    return api.request(originalRequest);
-                }
+                return api.request(originalReq);
             } catch (error) {
                 return error;
             }
         }
+        throw error;
     }
 );

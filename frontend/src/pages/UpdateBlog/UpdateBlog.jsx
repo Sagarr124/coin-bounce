@@ -46,7 +46,7 @@ const UpdateBlog = () => {
         const response = await updateBlog(data);
 
         if (response.status === 200) {
-            navigate("/blog");
+            navigate("/blogs");
         }
     };
 
@@ -54,7 +54,7 @@ const UpdateBlog = () => {
         (async function getBlogDetails() {
             const response = await getBlogById(id);
 
-            if (response === 200) {
+            if (response.status === 200) {
                 setTitle(response.data.blog.title);
                 setContent(response.data.blog.content);
                 setPhoto(response.data.blog.photo);

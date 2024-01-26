@@ -35,7 +35,7 @@ const BlogDetails = () => {
 
             const blogResponse = await getBlogById(id);
 
-            if (blogResponse === 200) {
+            if (blogResponse.status === 200) {
                 setOwnsBlog(
                     user.username === blogResponse.data.blog.authorUsername
                 );
@@ -49,7 +49,7 @@ const BlogDetails = () => {
         const response = await deleteBlog(id);
 
         if (response.status === 200) {
-            navigate("/blog");
+            navigate("/blogs");
         }
     };
 
@@ -92,7 +92,7 @@ const BlogDetails = () => {
                     <div className={styles.controls}>
                         <button
                             className={styles.editButton}
-                            onClick={() => navigate(`/blog-update/${id}`)}
+                            onClick={() => navigate(`/blog-update/${blog._id}`)}
                         >
                             Edit
                         </button>

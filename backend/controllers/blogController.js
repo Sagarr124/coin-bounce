@@ -84,7 +84,7 @@ const blogController = {
         const { id } = req.params;
 
         try {
-            blog = await Blog.findById(id).populate("author");
+            blog = await Blog.findOne({ _id: id }).populate("author");
         } catch (error) {
             return next(error);
         }
